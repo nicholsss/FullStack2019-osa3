@@ -18,8 +18,9 @@ app.use(morgan(':method :url :status :res[content.lenght] - : response-time ms :
 morgan.token('all',  (req, res)  => {
   return req.method === "POST" ? JSON.stringify(req.body) : undefined
 })
-
 app.use(morgan("tiny"));
+
+
 
 let persons = [
  
@@ -42,7 +43,7 @@ app.get("/api/persons/:id", (request, response) => {
   }
 });
 app.delete("/api/persons/:id", (request, response,next) => {
-  Person.findByIdAndRemove(request.params._id)
+  Person.findByIdAndRemove(request.params.id)
     .then(result => {
       response.status(204).end();
       

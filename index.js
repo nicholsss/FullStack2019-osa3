@@ -14,13 +14,13 @@ app.use(bodyParser.json());
 app.use(
   morgan(":method :url :status :res[content.lenght] - : response-time ms :all")
 );
-console.log();
+
 /*morgan.token("type", function(req, res) {
   return req.body["application/json"];
   clog dsd
 });
 */
-morgan.token("all", (req, res) => {
+morgan.token("all", (req,) => {
   return req.method === "POST" ? JSON.stringify(req.body) : undefined;
 });
 app.use(morgan("tiny"));
@@ -39,7 +39,7 @@ app.put("/api/persons/:id", (request, response, next) => {
     name: body.name,
     number: body.number
   };
-  console.log(person);
+ 
   Person.findByIdAndUpdate(request.params.id, person, { new: true })
 
     .then(updatedPerson => {
@@ -48,7 +48,7 @@ app.put("/api/persons/:id", (request, response, next) => {
     .catch(error => next(error));
 });
 
-app.get("/api/persons/:id", (request, response, next) => {
+app.get("/api/persons/:id", (request, response,) => {
   Person.findById(request.params.id).then(person => {
     response.json(person.toJSON());
   });
@@ -57,7 +57,7 @@ app.get("/api/persons/:id", (request, response, next) => {
 
 app.delete("/api/persons/:id", (request, response, next) => {
   Person.findByIdAndRemove(request.params.id)
-    .then(result => {
+    .then(() => {
       response.status(204).end();
     })
     .catch(error => next(error));
@@ -79,7 +79,7 @@ app.post("/api/persons", (request, response, next) => {
       // .catch(error => next(error))
     });
   } else if (persons.map(person => person.name).includes(body.name)) {
-    console.log("nimet", person.name);
+    //console.log("nimet", person.name);
     return response.status(400).json({
       error: "name unique"
       //.catch(error => next(error))
@@ -93,7 +93,7 @@ app.post("/api/persons", (request, response, next) => {
   person.save().then(savedPerson => {
     response.json(savedPerson.toJSON());
   })
-  .catch(error => next(error))
+    .catch(error => next(error))
   /*
   persons = persons.concat(person);
   response.json(person);
@@ -108,7 +108,7 @@ const unknownEndpoint = (request, response) => {
 app.use(unknownEndpoint);
 
 const errorHandler = (error, request, response, next) => {
-  console.error(error.message);
+  //console.error(error.message);
 
   if (error.name === "CastError" && error.kind == "ObjectId") {
     return response.status(400).send({ error: "malformatted id" });
@@ -123,5 +123,5 @@ app.use(errorHandler);
 
 const PORT = process.env.PORT;
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+  //console.log(`Server running on port ${PORT}`);
 });

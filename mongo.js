@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 const mongoose = require("mongoose");
 
 if (process.argv.length < 3) {
@@ -36,7 +37,7 @@ if (process.argv.length == 3) {
 }
 
 if (process.argv.length == 5) {
-  person.save().then(response => {
+  person.save().then(() => {
     console.log(`lisätään ${name} numero ${number} luetteloon`);
     mongoose.connection.close();
   });

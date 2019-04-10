@@ -17,6 +17,7 @@ app.use(
 console.log();
 /*morgan.token("type", function(req, res) {
   return req.body["application/json"];
+  clog dsd
 });
 */
 morgan.token("all", (req, res) => {
